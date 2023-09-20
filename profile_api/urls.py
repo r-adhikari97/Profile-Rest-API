@@ -1,9 +1,16 @@
-from django.urls import path
+from django.urls import path, include
 from profile_api import  views
+from rest_framework.routers import DefaultRouter
+
+
+# Registering a Viewset using Router
+router = DefaultRouter()
+router.register('hello-viewSet', views.HelloViewSets, basename='hello-viewset')
 
 urlpatterns = [
 
     # Standard Function to convert API view class  to render
     path('Hello-View/',views.HelloAPIView.as_view()),
+    path('',include(router.urls))
 
 ]
