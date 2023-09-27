@@ -3,7 +3,14 @@ from rest_framework.response import Response
 from rest_framework import  viewsets
 from rest_framework import status  # Handy HTTP Status codes
 from profile_api import serializers  #
+from profile_api import models
 
+# autho
+from rest_framework.authentication import TokenAuthentication
+from profile_api import permissions
+
+# Import Auth permissions to make it work
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class HelloAPIView(APIView):
     """ Test API View """
@@ -120,3 +127,17 @@ class HelloViewSets(viewsets.ViewSet):
     def delete(self,request,pk=None):
         """ Handling deleting/Dstroying object """
         return  Response({'http_method':'DELETE'})
+
+
+
+
+
+class UserProfileViewSet (viewsets.ModelViewSet):
+     """ Handling , Creating and Updating profiles """
+     serializer_class = serializers.UserProfileSerializer
+     queryset = models.UserProfile.objects.all()
+     authentication_classes = (TokenAuthentication,)
+     permission_classes = (IsAuthenticatedOrReadOnly,permissions.UpdateOwProfile,)
+
+
+
