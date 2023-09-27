@@ -8,9 +8,12 @@ from profile_api import models
 # autho
 from rest_framework.authentication import TokenAuthentication
 from profile_api import permissions
-
 # Import Auth permissions to make it work
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
+
+# Search Filter
+from rest_framework import filters
 
 class HelloAPIView(APIView):
     """ Test API View """
@@ -138,6 +141,8 @@ class UserProfileViewSet (viewsets.ModelViewSet):
      queryset = models.UserProfile.objects.all()
      authentication_classes = (TokenAuthentication,)
      permission_classes = (IsAuthenticatedOrReadOnly,permissions.UpdateOwProfile,)
+     filter_backends = (filters.SearchFilter,)
+     search_fields = ('name','email',)
 
 
 
