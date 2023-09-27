@@ -5,7 +5,7 @@ from rest_framework import status  # Handy HTTP Status codes
 from profile_api import serializers  #
 from profile_api import models
 
-# autho
+# auth
 from rest_framework.authentication import TokenAuthentication
 from profile_api import permissions
 # Import Auth permissions to make it work
@@ -14,6 +14,11 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 # Search Filter
 from rest_framework import filters
+
+# AuthToken
+from rest_framework.authtoken.views import  ObtainAuthToken
+from rest_framework.settings import api_settings
+
 
 class HelloAPIView(APIView):
     """ Test API View """
@@ -145,4 +150,9 @@ class UserProfileViewSet (viewsets.ModelViewSet):
      search_fields = ('name','email',)
 
 
+# User Login API View
+
+class UserLoginAPIView(ObtainAuthToken):
+    """ Handles creating user authentication token """
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
